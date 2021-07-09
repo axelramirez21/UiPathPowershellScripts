@@ -390,7 +390,7 @@ function Main {
 
     #add public DNS to bindings
     New-WebBinding -Name "UiPath*" -IPAddress "*" -Protocol http
-    New-WebBinding -Name "UiPath*" -IPAddress "*" -Protocol https
+    New-WebBinding -Name "UiPath*" -IPAddress "*" -Protocol https -HostHeader $orchestratorHostname
 
     #stopping default website
     Set-ItemProperty "IIS:\Sites\Default Web Site" serverAutoStart False
