@@ -278,17 +278,21 @@ function Main {
     #Created this to support multiple DNS names on the certificate
     $baseDnsNames = "$env:COMPUTERNAME", "$orchestratorHostname"
 
-    if ($certificateDnsNames [String] -match 1) {
-       $tokens = $certificateDnsNames.split(",")
-        Sforeach ($dnsName in $tokens)
+    if ($certificateDnsNames.Length -eq 1) {
+
+       $tokens = $certificateDnsNames.Split(",")
+
+        foreach ($dnsName in $tokens)
         {
-          $baseDnsNames = $baseDnsNames + "$dnsName"
+          $baseDnsNames += "$dnsName"
         }
+
     } else {
         #Append any additional DNS names to the base DNS string
         foreach ($dnsName in $certificateDnsNames)
         {
-          $baseDnsNames = $baseDnsNames + "$dnsName"
+          Write-Output "dns name value: "$dnsName
+          $baseDnsNames += "$dnsName"
         }
     }
 
