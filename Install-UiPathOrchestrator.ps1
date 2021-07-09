@@ -278,10 +278,18 @@ function Main {
     #Created this to support multiple DNS names on the certificate
     $baseDnsNames = "$env:COMPUTERNAME", "$orchestratorHostname"
 
-    #Append any additional DNS names to the base DNS string
-    foreach ($dnsName in $certificateDnsNames)
-    {
-      $baseDnsNames = $baseDnsNames + "$dnsName"
+    if ($certificateDnsNames [String] -match 1) {
+       $tokens = $certificateDnsNames.split(",")
+        Sforeach ($dnsName in $tokens)
+        {
+          $baseDnsNames = $baseDnsNames + "$dnsName"
+        }
+    } else {
+        #Append any additional DNS names to the base DNS string
+        foreach ($dnsName in $certificateDnsNames)
+        {
+          $baseDnsNames = $baseDnsNames + "$dnsName"
+        }
     }
 
     $cert = New-SelfSignedCertificate -DnsName $baseDnsNames -CertStoreLocation cert:\LocalMachine\My -FriendlyName "Orchestrator Self-Signed certificate" -KeySpec Signature -HashAlgorithm SHA256 -KeyExportPolicy Exportable  -NotAfter (Get-Date).AddYears(20)
