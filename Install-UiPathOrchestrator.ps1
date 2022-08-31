@@ -85,7 +85,7 @@
 param(
 
     [Parameter()]
-    [ValidateSet('21.10.0','21.4.1','20.10.8')]
+    [ValidateSet('22.4.3','21.10.0','21.4.1','20.10.8')]
     [string] $orchestratorVersion = "21.4.1",
 
     [Parameter()]
